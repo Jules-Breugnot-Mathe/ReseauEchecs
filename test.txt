@@ -1,0 +1,234 @@
+
+    /*
+
+    //-------tests unitaires des membres de la classe IJ-------//
+
+    IJ x(0, 0); // constructeur par défault ok
+    IJ y = x; // constructeur par copie ok
+    IJ z(1, 0);
+    z=x; // opérateur = ok
+    IJ o(1, 1);
+    cout<<x.geti()<<endl; // accesseur de i ok
+    cout<<x.getj()<<endl; // accesseur de j ok
+    bool b = operator<(x, o); // operateur < ok
+    cout<<b<<endl;
+    b = operator<(o, x); // operateur < ok 
+    cout<<b<<endl;
+    */
+
+
+    //---------------tests unitaires de la classe matrice (stockée pleine)-------------//
+    
+    /*
+    Mat A(10, 10); // constructeur par default ok
+    Mat B(11, 11);
+    B=A; // surcharge de = ok
+    Mat C=A; // constructeur par copie ok
+    C.getcoef(2, 5) = 9;
+    Mat D(2, 2);
+    std::cout<<D<<endl;//surcharge de << ok
+    vector<double> u{1, 1};
+    //vector<double> v = C.matve(u); // produit incompatible renvoie un code d'erreur : ok
+    vector<double> v = D.matve(u);
+    std::cout<<v[0]<<std::endl;
+    std::cout<<v[1]<<std::endl; // affichage correct : ok
+    */
+    
+    /*
+    Mat A(2, 2);
+    A.getcoef(0, 0) = 1;
+    A.getcoef(0, 1) = 2;
+    A.getcoef(1, 0) = 3;
+    A.getcoef(1, 1) = 4;
+
+    Mat B(2, 2);
+    B.getcoef(0, 0) = 5;
+    B.getcoef(0, 1) = 6;
+    B.getcoef(1, 0) = 7;
+    B.getcoef(1, 1) = 8;
+
+    Mat C = A + B;
+
+    cout << "Matrice A :\n" << A;
+    cout << "Matrice B :\n" << B;
+    cout << "Matrice A + B :\n" << C;
+    //test de operator+ : ok
+    C = C.scale(C, -1);
+    cout << "Matrice C * -1 \n"<< C;
+
+    C = A * B;
+
+    std::cout << "A * B = \n" << C;
+    
+    Mat D(2, 3);
+    D.getcoef(0,0) = 1;
+    D.getcoef(0,1) = 2;
+    D.getcoef(0,2) = 3;
+    D.getcoef(1,0) = 4;
+    D.getcoef(1,1) = 5;
+    D.getcoef(1,2) = 6;
+
+    std::vector<double> u{1, 0, -1};
+
+    std::vector<double> result = D * u;
+
+    std::cout << "Résultat du produit A * v :\n";
+    for (double x : result) {  
+        std::cout << x << " ";
+    }
+    std::cout << std::endl;
+
+    u = u*3.0;
+     for (double x : u) {  
+        std::cout << x << " ";
+    }
+    //les surcharges de + et de * pour les vecteurs fonctionnent
+
+    */
+
+    //-------------------tests unitaires de la classe Layer-------------------//
+
+    /*
+    Layer L; // constructeur par défaut ok
+    Layer L0(10, 10); // ok
+    Layer L1 = L0; // conctructeur par copie ok
+    Layer L2;
+    L2 = L1; //surcharge de = ok
+    Mat W(2, 2);
+    W.getcoef(0, 0) = 1;
+    W.getcoef(1, 1) = 1;
+    vector<double> B(2, 0);
+    Layer L_n(2, 2);
+    L.getWeight() = W; L.getBiais() = B; // accesseurs ok
+    std::vector<double> X(2, 1);
+    std::vector<double> Y = L_n.pass_forward(X); // pass_forward : ok
+    //on va tester un calcul de gradient des coefs d'une couche par rapport au carré de la norme 2 entre Xn+1 et
+    //l'activation de la couche suivante, ici un vecteur choisi arbitrairement
+    std::vector<double> X_cible(2, 2);
+    std::cout<<L_n.getWeight();
+    L_n.backward_pass(Y, 1);
+    std::cout<<L_n.getWeight();// à modifier, problème de modification des coefs
+    */
+
+    //----------test de la méthode backward_pass pour la classe Layer---------//
+
+    /*
+    Layer layer(3, 2);
+
+    // Instanciation des poids
+    Mat& W = layer.getWeight();
+    W.getcoef(0, 0) = 0.1;
+    W.getcoef(0, 1) = 0.2;
+    W.getcoef(0, 2) = 0.3;
+    W.getcoef(1, 0) = -0.1;
+    W.getcoef(1, 1) = -0.2;
+    W.getcoef(1, 2) = -0.3;
+
+    // nstanciation du biais
+    std::vector<double>& B = layer.getBiais();
+    B[0] = 0.1;
+    B[1] = -0.1;
+
+    // Activation X
+    std::vector<double> X = {1.0, 2.0, 3.0};
+
+    // Propagation avant
+    std::vector<double> Y = layer.pass_forward(X);
+    std::cout << "activation de la couche n+1 (Y) c";
+    for (double y : Y) std::cout << y << " ";
+    std::cout << "\n";
+
+    // Cible 
+    std::vector<double> Y_cible = {0.0, 1.0};
+
+    // Apprentissage : backpropagation
+    double alpha = 0.1;
+    layer.backward_pass(Y_cible, alpha);
+
+    // Affichage de W mis à jour
+    std::cout << "Poids W mis a jour :\n" << layer.getWeight();
+
+    // Affichage de B mis à jour
+    std::cout << "Biais B mis a jour : ";
+    for (double b : layer.getBiais()) std::cout << b << " ";
+    std::cout << "\n";
+
+    // Affichage de X_opti
+    std::cout << "X_opti : ";
+    for (double x : layer.getXopti()) std::cout << x << " ";
+    std::cout << "\n";
+
+    */
+
+
+    //-----------------------test de la fonction de lecture de la base de données----------------//
+    //tests de la fonction lire_ligne_csv// 
+    /*
+    vector<double> u0 = lire_ligne_csv("chess_positions.csv", 1);
+    for (int i=0; i<u0.size();i++){
+        std::cout<<u0[i]<<std::endl;
+    }
+    cout<<u0[0]<<endl;
+    */
+   //AVERTISSEMENT ne pas extraire la donnée en n=0 car c'est l'en-tête de colonne, génère un bug
+   
+
+
+
+   //----------------instanciation et tests de la classe Dense-----------------------//
+    /*
+   try {
+        // --- instanciation d'un objet Dense ---
+        int input_dim = 3;
+        std::vector<int> hidden_dims = {4, 5};
+        int output_dim = 2;
+
+        Dense net1;
+        net1.set_layer(input_dim, hidden_dims, output_dim);
+
+        // on rentre des valeurs non nulles dans le réseau pour les observer dans le .txt
+        auto& layers = net1.getNetwork();
+        for (size_t i = 0; i < layers.size(); ++i) {
+            auto& W = layers[i].getWeight();
+            auto& B = layers[i].getBiais();
+            for (int r = 0; r < W.getnRows(); ++r)
+                for (int c = 0; c < W.getnCols(); ++c)
+                    W.getcoef(r,c) = 0.1 * (r + c + i);
+
+            for (size_t b = 0; b < B.size(); ++b)
+                B[b] = 0.5 * b + i;
+        }
+
+        // --- Sauvegarde dans Model.txt ---
+        net1.save_weights("Model.txt");
+        std::cout << "Poids sauvegardés dans Model.txt" << std::endl;
+
+        // --- Chargement dans un nouveau Dense ---
+        
+        Dense net2;
+        net2.load_weights("Model.txt", input_dim, hidden_dims, output_dim);
+        std::cout << "Poids chargés depuis Model.txt" << std::endl;
+
+        // Vérification simple: affichage poids couche 0
+        const auto& W0 = net2.getNetwork()[0].getWeight();
+        const auto& B0 = net2.getNetwork()[0].getBiais();
+        std::cout << "Poids couche 0 après chargement :" << std::endl;
+        for (int r = 0; r < W0.getnRows(); ++r) {
+            for (int c = 0; c < W0.getnCols(); ++c) {
+                std::cout << W0.getcoef(r,c) << " ";
+            }
+            std::cout << std::endl;
+        }
+        std::cout << "Biais couche 0 après chargement :" << std::endl;
+        for (auto val : B0) std::cout << val << " ";
+        std::cout << std::endl;
+
+    } catch (const std::exception& ex) {
+        std::cerr << "Erreur : " << ex.what() << std::endl;
+        return 1;
+    }
+    
+    sauvegarde et charge du fichier .txt fonctionne ! 
+
+    
+    */

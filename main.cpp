@@ -34,6 +34,7 @@ int main(){
 
     //----------------- PROTOTYPE DE RESEAU ET APPRENTISSAGE-------------------//
     // Construction du réseau Dense
+    
     /*
     Dense Reseau;
     Layer L0(97, 64);
@@ -43,16 +44,28 @@ int main(){
     std::vector<Layer> layers{L0, L1, L2};
     Reseau.getNetwork() = layers;
     //entrainement sur 1 epoch
-    Reseau.backpropagation("chess_positions.csv", 1, 97, 1, 5);
-    Reseau.save_weights("Model.txt");
     */
-    /*
+    
+    /* // chargement, entrainement, et sauvegarde du réseau.
     Dense Reseau;
     Reseau.load_weights("Model.txt");
-    Reseau.backpropagation("chess_positions.csv", 1, 97, 1, 5);
+    Reseau.backpropagation("chess_positions.csv", 1, 97, 1, 1);
     Reseau.save_weights("Model.txt");
     */
 
+    //PREDICTIONS
+    Dense Reseau;
+    Reseau.load_weights("Model.txt");
+    std::vector<double> data, pred;
+    for (int i=1; i<21; i++){
+        data = lire_ligne_csv("chess_positions.csv", i);
+        std::cout<<"valeur cible : "<<data[data.size()-1]<<std::endl;
+        data.pop_back();
+        pred = prediction(Reseau, data);
+        std::cout<<"prediction : "<<pred[0]*100<<std::endl;
+    }
+    
+ 
     
     
     

@@ -236,14 +236,14 @@ void Dense::set_layer(int input_dim, const std::vector<int>& hidden_dims, int ou
 
 
 void Dense::backpropagation(const std::string& database, double alpha, const int input_size, const int output_size, int epochs) {
-    int N = count_lines_in_csv(database) - 1; // on retire 1 pour l'en-tete des fichiers csv
+    int N = count_lines_in_csv(database) - 1; //nb de données,  on retire 1 pour l'en-tete des fichiers csv
     std::cout<<"Entrainement sur "<<N<<" donnees : "<<std::endl;
     std::vector<double> X;
     std::vector<double> Y;
     for (int epoch = 0; epoch < epochs; epoch++) {
     auto start = std::chrono::high_resolution_clock::now();
     std::cout << "epoch : " << epoch << std::endl;
-    for (int n = 1; n < 20000; n++) { 
+    for (int n = 1; n < 2000; n++) { 
         std::vector<double> donnee = lire_ligne_csv(database, n);
         backward_pass(donnee, alpha, input_size, output_size);
         }
@@ -253,4 +253,3 @@ void Dense::backpropagation(const std::string& database, double alpha, const int
     }
     std::cout << "Apprentissage termine" << std::endl;
 }
-

@@ -32,9 +32,6 @@ public:
     //prenant en compte toutes les données de la base, avec coefficient d'apprentissage et nombre d'itérations (epochs) en paramètre.
     int getNbCouches() const;
     int& getNbCouches();
-    std::vector<double> prediction(std::vector<double> input);
-    
-
 };
 
 // (possibilité de faire du polymorphisme plus tard en faisant hériter d'une classe Network des classes Dense et Convolutive

@@ -179,7 +179,7 @@ bool read_vector_from_stream(std::istream& is, std::vector<double>& vec, int exp
 }
 
 
-int evaluation(const Plateau& plateau, const Dense& reseau) {
+int evaluation(const Plateau& plateau, const Dense& reseau, bool Tour) {
     std::vector<double> input;
 
     // Liste des 12 bitboards dans l’ordre
@@ -199,15 +199,16 @@ int evaluation(const Plateau& plateau, const Dense& reseau) {
             input.push_back(static_cast<double>(byte));
         }
     }
-
+    //ajout du tour : 
+    input.push_back(Tour);
     // Vérification finale
-    if (input.size() != 96) {
+    if (input.size() != 97) {
         std::cerr << "Erreur : vecteur d'entrée invalide, taille = " << input.size() << std::endl;
         return -1;
     }
 
     // Passage dans le réseau
-    std::vector<double> output = reseau.pass_forward(input);
+    std::vector<double> output = prediction(reseau, input);
 
     if (output.empty()) {
         std::cerr << "Erreur : le réseau a retourné un vecteur vide." << std::endl;
@@ -215,5 +216,19 @@ int evaluation(const Plateau& plateau, const Dense& reseau) {
     }
 
     // Sortie : arrondie à l’entier
-    return static_cast<int>(output[0]);
+    return (static_cast<int>(output[0]))*100;
+}
+
+
+std::vector<double> prediction(Dense& Reseau, std::vector<double> input){
+    //prend en entrée le réseau qui doit être de même dimension d'entrée que l'input
+    if (Reseau.getNetwork()[0].getInputDim() != input.size()){
+        std::cerr<<"la dimension d'entree du reseau est incompatible avec la dimension du vecteur input"<<std::endl;
+        return input;
+    }
+    //input de dimension 97 pour les échecs, c'est a dire bitboard de 96 et 1 pour le tour blanc ou noir
+    //input.push_back(0);
+
+    std::vector<double> output = Reseau.pass_forward(input);
+    return output;
 }

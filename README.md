@@ -31,9 +31,9 @@ Dans mon cas, j'ai choisi un réseau de couche d'entrée de dimension 96, deux c
     Reseau.backpropagation("chess_positions.csv", 1, 97, 1, 5);
     Reseau.save_weights("Model.txt");```
 
-## exemple d'utilisation générale : 
-//commenter dans les fichiers Utils.hpp et Utils.cpp les lignes
-//#include "plateau.hpp", et les déclaration et implémentation de la fonction evaluation. 
+// exemple d'utilisation générale : 
+// commenter dans les fichiers Utils.hpp et Utils.cpp les lignes
+// include "plateau.hpp", et les déclaration et implémentation de la fonction evaluation. 
 // instancier un réseau
 ```int main(){
     Dense Reseau;
@@ -47,7 +47,7 @@ Dans mon cas, j'ai choisi un réseau de couche d'entrée de dimension 96, deux c
     Reseau.backpropagation("chess_positions.csv", 1, 97, 1, 5);
     Reseau.save_weights("Model.txt");
     return 0;
-//utiliser la méthode `std::vector<double> Dense::pass_forward(std::vector<double> input);` pour caluler la sortie correspondant à la prediction.
+// utiliser la méthode `std::vector<double> Dense::pass_forward(std::vector<double> input);` pour caluler la sortie correspondant à la prediction.
 }```
 
     

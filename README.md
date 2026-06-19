@@ -2,8 +2,7 @@
 # à l'aide de le base de données *"chess_positions.csv"* convertie de pgn à bitboard.
 
 ## objectif : 
-Ce projet vise à implémenter un algorithme d'apprentissage supervisé dans le but d'évaluer des positions d'échecs
-pour, à terme, programmer un moteur d'échecs simple. Ce projet n'utilise pas de bibliothèque de machine learning.
+Ce projet vise à implémenter un algorithme d'apprentissage supervisé dans le but d'évaluer des positions d'échecs. Celui ci s'inscrit dans un projet plus large de moteur d'échecs, reposant donc sur une fonction heurisique d'évaluation de positions dans un arbre d'exploration. 
 
 ## mise en oeuvre : 
 le format bitboard stocke des positions d'echecs sous la forme de 12 nombres de type uint64_t hexadécimaux. 
@@ -13,12 +12,18 @@ Par exemple pour les pions blancs, le nombre 0000FF00, soit , en décimal,
 nous indique avec des 1 les positions des représentants des pions sur le plateau.
 ces nombres sont coupés en paquet de 2 hexadécimaux, puis tous concaténé pour former un vecteur de 96 entrées qui est l'entrée du réseau. 
 
+## Dépendances Logicielles / Architecture
+Le projet a été développé en partant de zéro, sans faire appel à une bibliothèque tierce, depuis l'implémentation des classes de tenseurs, jusqu'au réseau dense. Il se décompose en une série d'objets encapsulant les différentes composantes d'un perceptron à n couches, d'un parseur spécifique au projet permettant d'instancier les poids d'un réseau à partir d'un fichier texte, ainsi que de la fonction réciproque permettant la sauvegarde des poids après entrainement. 
+
+## Compilation
+le projet a été developpé et testé sous windows, compilé à la main à l'aide de ''' g++ *.cpp'''. Ce code a été intégré avec succès au reste du projet de moteur d'échecs, après avoir subit des tests unitaires sur chacune de ses classes. 
+
 ## rétropopagation du gradient : 
 La classe Dense est codée avec un vecteur d'objets de type Layer, représentant les couches.
 La classe Layer possède une matrice de poids, un vecteur de biais, et un vecteur d'activation, ainsi qu'un vecteur activation optimale.
-La méthode backward_pass de la n-ième couche Layer calcule la distance euclidienne entre la sortie du réseau Y = sigmoid(WX + B) et l'activation de la couche n+1. Ensuite, les dérivées partielles des coefficients des poids, biais, et activation par rapport à cette distance sont calculées, et les gradients sont construit. On applique une méthode de destente de gradient, et on ajuste les coef de la couche n pour minimiser cette distance. On stocke donc dans le vecteur activation optimale l'activation ajustée, sur laquelle on pourra calculer le gradient de la couche n-1. 
+La méthode backward_pass de la n-ième couche Layer calcule la distance euclidienne entre la sortie du réseau Y = sigmoid(WX + B) et l'activation de la couche n+1. Ensuite, les dérivées partielles des coefficients des poids, biais, et activation par rapport à cette distance sont calculées, et les gradients sont construit. On applique une méthode de destente de gradient, et on ajuste les coefficients de la couche n pour minimiser cette distance. On stocke donc dans le vecteur activation optimale l'activation ajustée, sur laquelle on pourra calculer le gradient de la couche n-1. 
 
-## architecture : 
+## Entrainement : 
 Dans mon cas, j'ai choisi un réseau de couche d'entrée de dimension 96, deux couches cachées de dimension 64 et une couche de sortie scalaire, soit plus de 10300 neurones. L'entrainement s'est déroulé sur 5 epoch en parcourant les 20 000 données de la base.
 
 

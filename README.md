@@ -1,5 +1,4 @@
-# Implémentation d'un Reseau de Neurones dense, et d'un algorithme de rétropropagation du gradient
-# à l'aide de le base de données *"chess_positions.csv"* convertie de pgn à bitboard.
+# Evaluation de positions d'échecs par réseau neuronal dense
 
 ## objectif : 
 Ce projet vise à implémenter un algorithme d'apprentissage supervisé dans le but d'évaluer des positions d'échecs. Celui ci s'inscrit dans un projet plus large de moteur d'échecs, reposant donc sur une fonction heurisique d'évaluation de positions dans un arbre d'exploration. 
